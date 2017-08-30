@@ -13,16 +13,20 @@
            <th>URL</th>
            <th>ShortURL</th>
            <th>Description</th>
+           <th>Tag</th>
        </tr>
        <c:forEach items="${urls}" var="url1">
          <tr>
            <td>${url1.url}</td>
            <td>${url1.shortUrl}</td>
            <td>${url1.description}</td>
+           <td>${url1.tag.nameTag}</td>
+           <td><a href="deleteUrl/${url1.idLink}">Delete</a> </td>
          </tr>
        </c:forEach>
      </table>
   </c:if>
   </div>
+<a href="addUrl">Add URL</a>
 </body>
 </html>

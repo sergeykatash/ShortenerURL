@@ -21,6 +21,10 @@ public class Url {
     @Column(name = "description")
     private String description;
 
+    @JoinColumn(name = "id_tag", referencedColumnName = "id_tag")
+    @ManyToOne(optional = false)
+    private Tag tag;
+
     public Long getIdLink() {
         return idLink;
     }
@@ -53,6 +57,14 @@ public class Url {
         this.description = description;
     }
 
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
+    }
+
     @Override
     public String toString() {
         return "Url{" +
@@ -60,6 +72,7 @@ public class Url {
                 ", url='" + url + '\'' +
                 ", shortUrl='" + shortUrl + '\'' +
                 ", description='" + description + '\'' +
+                ", tag=" + tag +
                 '}';
     }
 }

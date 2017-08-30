@@ -5,6 +5,7 @@
 
     <session-factory>
         <mapping class = "com.testask.shortenerURL.domain.Url"/>
+        <mapping class = "com.testask.shortenerURL.domain.Tag"/>
 
     </session-factory>
 </hibernate-configuration>
