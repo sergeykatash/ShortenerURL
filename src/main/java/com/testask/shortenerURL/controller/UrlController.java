@@ -34,6 +34,13 @@ public class UrlController {
         return "index";
     }
 
+    @RequestMapping(value= "signup", method = RequestMethod.GET)
+    public String getUserUrls(Model model){
+        List<Url> urls = this.urlService.listUrls();
+        model.addAttribute("urls", urls);
+        return "signup";
+    }
+
     @RequestMapping(value= "addUrl", method = RequestMethod.GET)
     public String addUrl(Model model){
         model.addAttribute("url", new Url());
@@ -51,13 +58,34 @@ public class UrlController {
             this.tagService.addTag(tag);
         }
         this.urlService.addUrl(url);
-        return "redirect:/";
+        return "redirect:/signup";
     }
 
     @RequestMapping(value= "deleteUrl/{id}", method = RequestMethod.GET)
     public String deleteUrl(@PathVariable Long id){
         this.urlService.removeUrl(id);
-        return "redirect:/";
+        return "redirect:/signup";
+    }
+
+    @RequestMapping(value = "/getUrl{id}", method = RequestMethod.GET)
+    public String getUrl(@PathVariable Long id, Model model) {
+        Url url = this.urlService.getUrlByID(id);
+        model.addAttribute("urlById", url);
+        return "urlById";
+    }
+
+    @RequestMapping(value = "/tagByName/{nameTag}", method = RequestMethod.GET)
+    public String getUrlsByTag(@PathVariable String nameTag, Model model) {
+        List<Url> urls = this.urlService.getUrlsByTag(nameTag);
+        model.addAttribute("urls", urls);
+        return "tagByName";
+    }
+
+    @RequestMapping(value = "editUrl/{id}", method = RequestMethod.GET)
+    public String editUrl(@PathVariable Long id, Model model) {
+        Url url = this.urlService.getUrlByID(id);
+        model.addAttribute("urlById", url);
+        return "editUrl";
     }
 
 

@@ -29,4 +29,19 @@ public class UrlServiceImpl implements UrlService {
     public void removeUrl(long id) {
         urlRepository.removeUrl(id);
     }
+
+    @Override
+    public Url getUrlByID(long id) {
+         return urlRepository.getUrlById(id);
+    }
+
+    @Override
+    public List<Url> getUrlsByTag(String nameTag) {
+        return urlRepository.getUrlsByTag(nameTag);
+    }
+
+    @Override
+    public void updateUrl(Url url) {
+        this.urlRepository.updateUrl(url);
+    }
 }

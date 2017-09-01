@@ -13,13 +13,7 @@
       </form:label></td>
       <td><form:input path="url" /></td>
     </tr>
-    <tr>
-      <td><form:label path="shortUrl">
-        ShortURL
-      </form:label></td>
-      <td><form:input path="shortUrl" /></td>
-    </tr>
-    <tr>
+     <tr>
       <td><form:label path="description">
         Description
       </form:label></td>
@@ -29,14 +23,14 @@
       <td><form:label path="tag.nameTag">
         Tag
       </form:label></td>
-      <td><form:textarea path="tag.nameTag" /></td>
+      <td><form:input path="tag.nameTag" /></td>
     </tr>
     <tr>
-      <td colspan="2"><input type="submit" value="addUrl"></td>
+      <td colspan="2"><input type="submit" value="GENERATE"></td>
     </tr>
   </table>
 
 </form:form>
-
+<a href="/">home page</a>
 </body>
 </html>

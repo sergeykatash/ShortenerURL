@@ -10,5 +10,8 @@ public interface UrlRepository {
     void addUrl(Url url);
     List<Url> listUrls();
     void removeUrl(long id);
+    Url getUrlById(long id);
+    List<Url> getUrlsByTag(String tag);
 
+    void updateUrl(Url url);
 }

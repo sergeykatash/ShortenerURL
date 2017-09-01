@@ -42,11 +42,12 @@ public class Url {
     }
 
     public String getShortUrl() {
-        return shortUrl;
+        return "http://testTask/"+String.valueOf(idLink);
     }
 
     public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
+        String s=shortUrl.replaceAll("http://testTask/", "");
+        this.shortUrl = s;
     }
 
     public String getDescription() {

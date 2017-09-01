@@ -11,4 +11,8 @@ public interface UrlService {
      void addUrl(Url url);
      List<Url> listUrls();
      void removeUrl(long id);
+     Url getUrlByID(long id);
+     List<Url> getUrlsByTag(String tag);
+
+     void updateUrl(Url url);
 }
