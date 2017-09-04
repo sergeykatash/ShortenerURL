@@ -25,6 +25,10 @@ public class Url {
     @ManyToOne(optional = false)
     private Tag tag;
 
+    @JoinColumn(name="id_user", referencedColumnName = "id_user")
+    @ManyToOne
+    private User user;
+
     public Long getIdLink() {
         return idLink;
     }
@@ -66,6 +70,14 @@ public class Url {
         this.tag = tag;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Url{" +
@@ -74,6 +86,7 @@ public class Url {
                 ", shortUrl='" + shortUrl + '\'' +
                 ", description='" + description + '\'' +
                 ", tag=" + tag +
+                ", user=" + user +
                 '}';
     }
 }
