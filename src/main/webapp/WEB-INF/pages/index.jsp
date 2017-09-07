@@ -7,7 +7,11 @@
 <body>
 <div>
   <h1>ShortenerURL</h1>
-    <a href="signup">Sign up</a>
+    <a href="signup">Войти</a>
+    <<td>
+    <a href="<c:url value="/addUser" />">
+    <label class="label">Регистрация</label> </a>
+    </td>
   <c:if test="${!empty urls}">
      <table>
        <tr>
@@ -20,7 +24,7 @@
            <td>${url1.url}</td>
            <td><a href="http://${url1.url}">
                <label>${url1.shortUrl}</label>   </a></td>
-           <td><a href="/getUrl${url1.idLink}">more</a> </td>
+           <td><a href="/getUrl${url1.idLink}">details</a> </td>
          </tr>
        </c:forEach>
      </table>

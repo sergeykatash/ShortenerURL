@@ -1,10 +1,14 @@
 package com.testask.shortenerURL.domain;
 
 /**
- * Created by user on 04.09.2017.
+ * Enum that represents role of {@link User}.
+ *
+ * @author Sergey Katashevich
+ * @version 1.0
  */
+
 public enum Role {
-    ANONYMOUS, USER;
+    ROLE_ANONYMOUS, ROLE_USER;
 
     Role() {
     }

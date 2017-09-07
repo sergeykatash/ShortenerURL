@@ -7,8 +7,14 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+
+/**
+ * Implementation of {@link UrlRepository} interface.
+ *
+ * @author Sergey Katashevich
+ * @version 1.0
+ */
 
 @Repository
 @Transactional
@@ -50,6 +56,16 @@ public class UrlRepositoryImpl implements UrlRepository {
     @Override
     public void updateUrl(Url url) {
         this.sessionFactory.getCurrentSession().update(url);
+    }
+
+    @Override
+    public List<Url> listUserUrls(String currentUserName) {
+        Criteria cr = this.sessionFactory.getCurrentSession()
+                .createCriteria(Url.class, "urls");
+        cr.createAlias("urls.user", "users");
+        cr.add(Restrictions.eq("users.userName", currentUserName));
+
+        return (List<Url>) cr.list();
     }
 
 

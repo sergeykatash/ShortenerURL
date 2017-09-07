@@ -2,6 +2,13 @@ package com.testask.shortenerURL.domain;
 
 import javax.persistence.*;
 
+/**
+ * Simple JavaBean domain object that represents a Tag.
+ *
+ * @author Sergey Katashevich
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "tags")
 public class Tag {

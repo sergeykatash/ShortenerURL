@@ -1,11 +1,17 @@
 package com.testask.shortenerURL.service;
 
-
 import com.testask.shortenerURL.domain.Tag;
 import com.testask.shortenerURL.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * Implementation of {@link TagService} interface.
+ *
+ * @author Sergey Katashevich
+ * @version 1.0
+ */
 
 @Service
 @Transactional

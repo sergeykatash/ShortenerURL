@@ -6,7 +6,8 @@
 </head>
 <body>
 <div>
-  <h1>ShortenerURL</h1>
+  <h1>PROFILE</h1>
+  <a href="<c:url value="/j_spring_security_logout" />" > Logout</a>
   <c:if test="${!empty urls}">
     <table>
       <tr>
@@ -21,7 +22,7 @@
           <td>${url1.shortUrl}</td>
           <td>${url1.description}</td>
           <td>${url1.tag.nameTag}</td>
-          <td><a href="editUrl/${url1.idLink}"/>Edit</a></td>
+          <td><a href="editUrl/${url1.idLink}"/>Edit</a> </td>
           <td><a href="deleteUrl/${url1.idLink}">Delete</a> </td>
         </tr>
       </c:forEach>

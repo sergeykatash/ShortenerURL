@@ -1,31 +1,43 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 31.08.2017
-  Time: 20:23
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title></title>
 </head>
 <body>
-<table>
-  <tr>
-    <th>URL</th>
-    <th>ShortURL</th>
-    <th>Description</th>
-    <th>Tag</th>
-  </tr>
-  <tr>
-    <td>${urlById.url}</td>
-    <td>${urlById.shortUrl}</td>
-    <td>${urlById.description}</td>
-    <td>${urlById.tag.nameTag}</td>
-  </tr>
-
-</table>
+<h1>EDIT FORM</h1>
+<form:form method="post" action="/edit" commandName="url">
+  <table>
+    <tr>
+      <td>URL</td>
+      <td>${url.url}</td>
+    </tr>
+    <tr>
+      <td><form:hidden path="idLink"/></td>
+      <td><form:hidden path="url"/></td>
+      <td><form:hidden path="tag.idTag"/></td>
+      <td><form:hidden path="user.id"/></td>
+      <td><form:hidden path="user.userName"/></td>
+      <td><form:hidden path="user.password"/></td>
+      <td><form:hidden path="user.role"/></td>
+    </tr>
+    <tr>
+      <td><form:label path="description">
+        Description
+      </form:label></td>
+      <td><form:textarea path="description" value="${url.description}"/></td>
+    </tr>
+    <tr>
+      <td><form:label path="tag.nameTag">
+        Tag
+      </form:label></td>
+      <td><form:input path="tag.nameTag" value="${url.tag.nameTag}"/></td>
+    </tr>
+    <tr>
+      <td colspan="2"><input type="submit" value="EDIT"></td>
+    </tr>
+  </table>
+</form:form>
+<a href="/signup">profile</a>
 </body>
 </html>

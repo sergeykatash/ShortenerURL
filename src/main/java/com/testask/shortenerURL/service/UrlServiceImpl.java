@@ -5,8 +5,14 @@ import com.testask.shortenerURL.repository.UrlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+
+/**
+ * Implementation of {@link UrlService} interface.
+ *
+ * @author Sergey Katashevich
+ * @version 1.0
+ */
 
 @Service
 @Transactional
@@ -17,7 +23,7 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public void addUrl(Url url) {
-        urlRepository.addUrl(url);
+        this.urlRepository.addUrl(url);
     }
 
     @Override
@@ -43,5 +49,10 @@ public class UrlServiceImpl implements UrlService {
     @Override
     public void updateUrl(Url url) {
         this.urlRepository.updateUrl(url);
+    }
+
+    @Override
+    public List<Url> listUserUrls(String currentUserName) {
+        return urlRepository.listUserUrls(currentUserName);
     }
 }

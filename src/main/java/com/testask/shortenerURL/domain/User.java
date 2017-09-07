@@ -1,9 +1,13 @@
 package com.testask.shortenerURL.domain;
 
-
-
-
 import javax.persistence.*;
+
+/**
+ * Simple JavaBean domain object that represents a User.
+ *
+ * @author Sergey Katashevich
+ * @version 1.0
+ */
 
 @Entity
 @Table(name = "users")
@@ -20,6 +24,7 @@ public class User {
     private String password;
 
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public User() {

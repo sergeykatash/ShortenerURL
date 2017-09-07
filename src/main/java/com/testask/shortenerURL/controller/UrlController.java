@@ -1,17 +1,28 @@
 package com.testask.shortenerURL.controller;
 
+import com.testask.shortenerURL.domain.Role;
 import com.testask.shortenerURL.domain.Tag;
 import com.testask.shortenerURL.domain.Url;
-import com.testask.shortenerURL.repository.UrlRepository;
+import com.testask.shortenerURL.domain.User;
 import com.testask.shortenerURL.service.TagService;
 import com.testask.shortenerURL.service.UrlService;
+import com.testask.shortenerURL.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+/**
+ * Controller.
+ *
+ * @author Sergey Katashevich
+ * @version 1.0
+ */
 
 import java.util.List;
 
@@ -20,23 +31,27 @@ public class UrlController {
 
     private UrlService urlService;
     private TagService tagService;
+    private UserService userService;
 
     @Autowired
-    public UrlController(UrlService urlService, TagService tagService) {
+    public UrlController(UrlService urlService, TagService tagService, UserService userService) {
         this.urlService = urlService;
         this.tagService = tagService;
+        this.userService = userService;
     }
 
     @RequestMapping(value= "/", method = RequestMethod.GET)
     public String getUrls(Model model){
-        List<Url> urls = this.urlService.listUrls();
-        model.addAttribute("urls", urls);
+        model.addAttribute("urls", this.urlService.listUrls());
         return "index";
     }
 
     @RequestMapping(value= "signup", method = RequestMethod.GET)
     public String getUserUrls(Model model){
-        List<Url> urls = this.urlService.listUrls();
+        String currentUserName =((UserDetails) SecurityContextHolder.
+                getContext().getAuthentication().
+                getPrincipal()).getUsername();
+        List<Url> urls = this.urlService.listUserUrls(currentUserName);
         model.addAttribute("urls", urls);
         return "signup";
     }
@@ -51,6 +66,12 @@ public class UrlController {
     public String addUrl(@ModelAttribute("url") Url url){
         Tag tag = url.getTag();
         String nameTag = tag.getNameTag();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder
+                .getContext().getAuthentication()
+                .getPrincipal();
+        String currentUserName = userDetails.getUsername();
+        User user = this.userService.getUser(currentUserName);
+        url.setUser(user);
         Tag tagN = this.tagService.tagByName(nameTag);
         if (tagN != null){
             url.setTag(tagN);
@@ -69,24 +90,44 @@ public class UrlController {
 
     @RequestMapping(value = "/getUrl{id}", method = RequestMethod.GET)
     public String getUrl(@PathVariable Long id, Model model) {
-        Url url = this.urlService.getUrlByID(id);
-        model.addAttribute("urlById", url);
+        model.addAttribute("urlById", this.urlService.getUrlByID(id));
         return "urlById";
     }
 
     @RequestMapping(value = "/tagByName/{nameTag}", method = RequestMethod.GET)
     public String getUrlsByTag(@PathVariable String nameTag, Model model) {
-        List<Url> urls = this.urlService.getUrlsByTag(nameTag);
-        model.addAttribute("urls", urls);
+        model.addAttribute("urls", this.urlService.getUrlsByTag(nameTag));
         return "tagByName";
+    }
+
+    @RequestMapping(value = "/signin", method = RequestMethod.GET)
+    public String signin() {
+        return "signin";
+    }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.GET)
+    public String getAdd(Model model) {
+        model.addAttribute("user", new User());
+        return "registration";
+    }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public String addNewUserPost(@ModelAttribute("user") User user) {
+        user.setRole(Role.ROLE_USER);
+        this.userService.addUser(user);
+        return "signin";
     }
 
     @RequestMapping(value = "editUrl/{id}", method = RequestMethod.GET)
     public String editUrl(@PathVariable Long id, Model model) {
-        Url url = this.urlService.getUrlByID(id);
-        model.addAttribute("urlById", url);
+        model.addAttribute("url", this.urlService.getUrlByID(id));
         return "editUrl";
     }
 
+    @RequestMapping(value= "/edit", method = RequestMethod.POST)
+    public String editUrl(@ModelAttribute("url") Url url){
+        this.urlService.updateUrl(url);
+        return "redirect:/signup";
+    }
 
 }

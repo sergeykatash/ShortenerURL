@@ -8,6 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Implementation of {@link TagRepository} interface.
+ *
+ * @author Sergey Katashevich
+ * @version 1.0
+ */
+
 @Repository
 @Transactional
 public class TagRepositoryImpl implements TagRepository {

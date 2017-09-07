@@ -3,6 +3,13 @@ package com.testask.shortenerURL.domain;
 
 import javax.persistence.*;
 
+/**
+ * Simple JavaBean domain object that represents a URL.
+ *
+ * @author Sergey Katashevich
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "urls")
 public class Url {
@@ -46,11 +53,11 @@ public class Url {
     }
 
     public String getShortUrl() {
-        return "http://testTask/"+String.valueOf(idLink);
+        return "http://testTask.com/"+String.valueOf(idLink);
     }
 
     public void setShortUrl(String shortUrl) {
-        String s=shortUrl.replaceAll("http://testTask/", "");
+        String s=shortUrl.replaceAll("http://testTask.com/", "");
         this.shortUrl = s;
     }
 

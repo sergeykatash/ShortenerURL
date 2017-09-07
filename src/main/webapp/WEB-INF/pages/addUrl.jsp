@@ -5,6 +5,7 @@
     <title></title>
 </head>
 <body>
+<h1>ADD FORM</h1>
 <form:form method="post" action="addUrl" commandName="url">
   <table>
     <tr>
@@ -26,11 +27,10 @@
       <td><form:input path="tag.nameTag" /></td>
     </tr>
     <tr>
-      <td colspan="2"><input type="submit" value="GENERATE"></td>
+      <td colspan="2"><input type="submit" value="save"></td>
     </tr>
   </table>
-
 </form:form>
-<a href="/">home page</a>
+<a href="/signup">profile</a>
 </body>
 </html>
