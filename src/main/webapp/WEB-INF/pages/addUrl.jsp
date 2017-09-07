@@ -12,19 +12,22 @@
       <td><form:label path="url">
            Url
       </form:label></td>
-      <td><form:input path="url" /></td>
+      <td><form:input path="url" />
+          <form:errors path="url" ></form:errors></td>
     </tr>
      <tr>
       <td><form:label path="description">
         Description
       </form:label></td>
-      <td><form:textarea path="description" /></td>
+      <td><form:textarea path="description" />
+          <form:errors path="description" ></form:errors></td>
     </tr>
     <tr>
       <td><form:label path="tag.nameTag">
         Tag
       </form:label></td>
-      <td><form:input path="tag.nameTag" /></td>
+      <td><form:input path="tag.nameTag" />
+          <form:errors path="tag.nameTag" ></form:errors></td>
     </tr>
     <tr>
       <td colspan="2"><input type="submit" value="save"></td>

@@ -7,11 +7,14 @@ import com.testask.shortenerURL.domain.User;
 import com.testask.shortenerURL.service.TagService;
 import com.testask.shortenerURL.service.UrlService;
 import com.testask.shortenerURL.service.UserService;
+import com.testask.shortenerURL.validator.UrlValidator;
+import com.testask.shortenerURL.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,16 +32,20 @@ import java.util.List;
 @Controller
 public class UrlController {
 
-    private UrlService urlService;
-    private TagService tagService;
-    private UserService userService;
+    @Autowired
+    private UserValidator userValidator;
 
     @Autowired
-    public UrlController(UrlService urlService, TagService tagService, UserService userService) {
-        this.urlService = urlService;
-        this.tagService = tagService;
-        this.userService = userService;
-    }
+    private UrlValidator urlValidator;
+
+    @Autowired
+    private UrlService urlService;
+
+    @Autowired
+    private TagService tagService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value= "/", method = RequestMethod.GET)
     public String getUrls(Model model){
@@ -63,7 +70,11 @@ public class UrlController {
     }
 
     @RequestMapping(value= "addUrl", method = RequestMethod.POST)
-    public String addUrl(@ModelAttribute("url") Url url){
+    public String addUrl(@ModelAttribute("url") Url url, BindingResult bindingResult){
+        urlValidator.validate(url, bindingResult);
+        if (bindingResult.hasErrors()){
+            return "addUrl";
+        }
         Tag tag = url.getTag();
         String nameTag = tag.getNameTag();
         UserDetails userDetails = (UserDetails) SecurityContextHolder
@@ -101,7 +112,10 @@ public class UrlController {
     }
 
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
-    public String signin() {
+    public String signin(Model model, String error) {
+        if (error != null) {
+            model.addAttribute("error", "Username or password is incorrect.");
+        }
         return "signin";
     }
 
@@ -112,7 +126,11 @@ public class UrlController {
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String addNewUserPost(@ModelAttribute("user") User user) {
+    public String addNewUserPost(@ModelAttribute("user") User user, BindingResult bindingResult) {
+        userValidator.validate(user, bindingResult);
+        if (bindingResult.hasErrors()){
+            return "registration";
+        }
         user.setRole(Role.ROLE_USER);
         this.userService.addUser(user);
         return "signin";
@@ -126,6 +144,14 @@ public class UrlController {
 
     @RequestMapping(value= "/edit", method = RequestMethod.POST)
     public String editUrl(@ModelAttribute("url") Url url){
+        Tag tag = url.getTag();
+        String nameTag = tag.getNameTag();
+        Tag tagN = this.tagService.tagByName(nameTag);
+        if (tagN != null){
+            url.setTag(tagN);
+        }else{
+            this.tagService.addTag(tag);
+        }
         this.urlService.updateUrl(url);
         return "redirect:/signup";
     }

@@ -12,13 +12,15 @@
       <td><form:label path="userName">
         UserName
       </form:label></td>
-      <td><form:input path="userName" /></td>
+      <td><form:input path="userName" />
+        <form:errors path="userName" ></form:errors></td>
     </tr>
     <tr>
       <td><form:label path="password">
         Password
       </form:label></td>
-      <td><form:input path="password" /></td>
+      <td><form:input path="password" />
+      <form:errors path="password"></form:errors></td>
     </tr>
     <tr>
       <td colspan="2"><input type="submit" value="Registre"></td>
