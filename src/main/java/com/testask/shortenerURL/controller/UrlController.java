@@ -75,20 +75,6 @@ public class UrlController {
         if (bindingResult.hasErrors()){
             return "addUrl";
         }
-        Tag tag = url.getTag();
-        String nameTag = tag.getNameTag();
-        UserDetails userDetails = (UserDetails) SecurityContextHolder
-                .getContext().getAuthentication()
-                .getPrincipal();
-        String currentUserName = userDetails.getUsername();
-        User user = this.userService.getUser(currentUserName);
-        url.setUser(user);
-        Tag tagN = this.tagService.tagByName(nameTag);
-        if (tagN != null){
-            url.setTag(tagN);
-        }else{
-            this.tagService.addTag(tag);
-        }
         this.urlService.addUrl(url);
         return "redirect:/signup";
     }
@@ -144,14 +130,6 @@ public class UrlController {
 
     @RequestMapping(value= "/edit", method = RequestMethod.POST)
     public String editUrl(@ModelAttribute("url") Url url){
-        Tag tag = url.getTag();
-        String nameTag = tag.getNameTag();
-        Tag tagN = this.tagService.tagByName(nameTag);
-        if (tagN != null){
-            url.setTag(tagN);
-        }else{
-            this.tagService.addTag(tag);
-        }
         this.urlService.updateUrl(url);
         return "redirect:/signup";
     }
